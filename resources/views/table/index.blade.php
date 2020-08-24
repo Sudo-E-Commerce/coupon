@@ -1,0 +1,8 @@
+@include('Table::components.text',['text' => $value->name])
+@include('Table::components.text',['text' => $value->code])
+@include('Table::components.text',['text' => config('SudoCoupon.coupon_type')[$value->type]])
+@include('Table::components.text',['text' => $value->value])
+@include('Table::components.text',['text' => $value->max_value])
+@include('Table::components.text',['text' => config('SudoCoupon.coupon_select_type')[$value->select]])
+@include('Table::components.text',['text' => $value->limit])
+@include('Table::components.text',['text' => $value->used])

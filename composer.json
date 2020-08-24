@@ -1,0 +1,27 @@
+{
+    "name": "sudo/coupon",
+    "description": "Packages about coupon",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Tran Minh Trong",
+            "email": "trongtm102@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Sudo\\Coupon\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sudo\\Coupon\\Providers\\CouponServiceProvider"
+            ],
+            "aliases": {}
+        }
+    }
+}
