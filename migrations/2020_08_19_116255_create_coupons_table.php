@@ -22,7 +22,7 @@ class CreateCouponsTable extends Migration
             $table->integer('value')->default(0);
             $table->integer('select')->default(0); // type = 0: all, type = 1: categories, type = 2: products
             $table->integer('limit')->default(1);
-            $table->integer('used')->default(1);
+            $table->integer('used')->default(0);
             $table->datetime('start_time')->nullable();
             $table->datetime('end_time')->nullable();
             $table->tinyInteger('status')->default(1);

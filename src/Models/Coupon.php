@@ -33,7 +33,7 @@ class Coupon extends BaseModel
     public function updateQuantity()
     {
         try{
-            $this->decrement('used');
+            $this->increment('used');
             return ['status' => true, 'message' => 'Success!'];
         }catch (\Exception $e){
             return ['status' => false, 'message' => $e->getMessage()];

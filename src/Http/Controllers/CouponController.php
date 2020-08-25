@@ -279,7 +279,7 @@ class CouponController extends AdminController
             ];
         }
 
-        if ($current_coupon->used >= $current_coupon->limit || $current_coupon->used <= 0) {
+        if ($current_coupon->used >= $current_coupon->limit || $current_coupon->used < 0) {
             return [
                 'status' => 0,
                 'message' => __('Coupon::message.has_been_used')
