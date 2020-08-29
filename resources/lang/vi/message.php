@@ -6,5 +6,6 @@ return [
     'cant_use' => 'Mã giảm giá không thể sử dụng',
     'has_been_used' => 'Mã giảm giá đã hết lượt sử dụng',
     'time_expired' => 'Mã giảm giá đã hết hạn sử dụng',
-    'not_for_product' => 'Mã giảm giá không áp dụng cho sản phẩm này'
+    'not_for_product' => 'Mã giảm giá không áp dụng cho sản phẩm này',
+    'product_empty' => 'Sản phẩm không tồn tại'
 ];

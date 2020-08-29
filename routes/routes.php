@@ -11,6 +11,6 @@ App::booted(function() {
 	// Not Auth
 	Route::namespace($namespace)->prefix('coupons')->middleware(['web'])->group(function() {
 		// lấy giá sản phẩm sau khi sử dụng coupon (single) params: product_id, code of coupon
-    	Route::post('price-after-coupon', 'CouponController@getPriceAfterCoupon')->name('coupons.getPriceAfterCoupon');
+    	Route::get('price-after-coupon', 'CouponController@getPriceAfterCoupon')->name('coupons.getPriceAfterCoupon');
 	});
 });

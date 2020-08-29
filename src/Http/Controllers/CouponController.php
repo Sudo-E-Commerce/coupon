@@ -335,7 +335,7 @@ class CouponController extends AdminController
                 ]);
             }
 
-            $data = []; // products can use coupon
+            $data = []; // products use coupon
             $total_sale = 0;
             $total_price = 0;
 
@@ -345,6 +345,7 @@ class CouponController extends AdminController
                 foreach ($products as $product) {
                     // Check Product or Categories
                     $after_sale_price = $sale_price = 0;
+                    $product_regular_price = $product->price;
                     switch ($current_coupon->select) {
                         case 2: // check if coupon for product
                             $check = $this->models->where(['code' => $coupon, 'select' => 2])
@@ -353,11 +354,9 @@ class CouponController extends AdminController
                                 })->get();
 
                             if (count($check) > 0) {
-                                $product_regular_price = $product->price;
                                 $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
                                 $sale_price = (int)$product_regular_price - (int)$after_sale_price;
                             }
-
                             break;
                         case 1: // check if coupon for categories
                             $check = $this->models->where(['code' => $coupon, 'select' => 1])
@@ -366,15 +365,16 @@ class CouponController extends AdminController
                                 })->get();
 
                             if (count($check) > 0) {
-                                $product_regular_price = $product->price;
                                 $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
                                 $sale_price = (int)$product_regular_price - (int)$after_sale_price;
                             }
                             break;
-                        default:
-                            $product_regular_price = $product->price;
+                        case 0: // for all
                             $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
                             $sale_price = (int)$product_regular_price - (int)$after_sale_price;
+                            break;
+                        default:
+
                             break;
                     }
 
@@ -383,12 +383,14 @@ class CouponController extends AdminController
                         'is_product_sale' => $after_sale_price ? true : false,
                         'regular_price' => $product_regular_price ?? 0,
                         'product_sale_price' => $sale_price ?? 0,
-                        'product_after_sale' => $after_sale_price ?? 0
+                        'product_after_sale' => $after_sale_price ? $after_sale_price : $product->price
                     ];
 
                     $total_sale += $sale_price; // total sale price
                     $total_price += $product->price ?? 0; // total price
                 }
+            } else {
+                return response(['status' => 0, 'message' => __('Coupon::message.product_empty')]);
             }
 
             return response(['status' => 1, 'products' => $data, 'total_sale' => $total_sale, 'total_price' => $total_price, 'message' => 'Success!']);
