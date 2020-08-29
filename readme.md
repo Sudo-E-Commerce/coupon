@@ -21,13 +21,13 @@ Mặc định package sẽ tạo ra giao diện quản lý cho toàn bộ coupon
                     [
                         'name' 		=> 'Thêm mới',
                         'route' 	=> 'admin.coupons.create',
-                        'role' 		=> 'destination_cities_create'
+                        'role' 		=> 'coupons_create'
                     ],
                     [
                         'name' 		=> 'Danh sách',
                         'route' 	=> 'admin.coupons.index',
-                        'role' 		=> 'destination_cities_index',
-                        'active' 	=> [ 'admin.destination_countries.create', 'admin.destination_cities.show', 'admin.destination_cities.edit' ]
+                        'role' 		=> 'coupons_index',
+                        'active' 	=> [ 'admin.coupons.create', 'admin.coupons.show', 'admin.coupons.edit' ]
                     ]
                 ]
             ]
