@@ -14,34 +14,34 @@ Mặc định package sẽ tạo ra giao diện quản lý cho toàn bộ coupon
 
 ##### Thêm đoạn code sau vào config/SudoMenu.php để hiển thị menu ####
     [
-                'type' 				=> 'multiple',
-                'name' 				=> 'Coupon',
-                'icon' 				=> 'fas fa-barcode',
-                'childs' => [
-                    [
-                        'name' 		=> 'Thêm mới',
-                        'route' 	=> 'admin.coupons.create',
-                        'role' 		=> 'coupons_create'
-                    ],
-                    [
-                        'name' 		=> 'Danh sách',
-                        'route' 	=> 'admin.coupons.index',
-                        'role' 		=> 'coupons_index',
-                        'active' 	=> [ 'admin.coupons.create', 'admin.coupons.show', 'admin.coupons.edit' ]
-                    ]
-                ]
+        'type' 				=> 'multiple',
+        'name' 				=> 'Coupon',
+        'icon' 				=> 'fas fa-barcode',
+        'childs' => [
+            [
+                'name' 		=> 'Thêm mới',
+                'route' 	=> 'admin.coupons.create',
+                'role' 		=> 'coupons_create'
+            ],
+            [
+                'name' 		=> 'Danh sách',
+                'route' 	=> 'admin.coupons.index',
+                'role' 		=> 'coupons_index',
+                'active' 	=> [ 'admin.coupons.create', 'admin.coupons.show', 'admin.coupons.edit' ]
             ]
+        ]
+    ]
 ##### Thêm đoạn code sau vào config/Module.php để tiến hành phân quyền ####
     'coupons' => [
-                'name' 			=> 'Coupon',
-                'permision' 	=> [
-                    [ 'type' => 'index', 'name' => 'Truy cập' ],
-                    [ 'type' => 'create', 'name' => 'Thêm' ],
-                    [ 'type' => 'edit', 'name' => 'Sửa' ],
-                    [ 'type' => 'restore', 'name' => 'Lấy lại' ],
-                    [ 'type' => 'delete', 'name' => 'Xóa' ],
-                ],
-            ],
+        'name' 			=> 'Coupon',
+        'permision' 	=> [
+            [ 'type' => 'index', 'name' => 'Truy cập' ],
+            [ 'type' => 'create', 'name' => 'Thêm' ],
+            [ 'type' => 'edit', 'name' => 'Sửa' ],
+            [ 'type' => 'restore', 'name' => 'Lấy lại' ],
+            [ 'type' => 'delete', 'name' => 'Xóa' ],
+        ],
+    ],
 #### Giao diện người dùng ####
 ##### Cách sử dụng #####
 -  @include('Coupon::form', ['ids' => [1,2,3], 'placeholder' => 'Enter your code']). 
@@ -57,21 +57,21 @@ Mặc định package sẽ tạo ra giao diện quản lý cho toàn bộ coupon
 ##### Có lỗi xảy ra #####
 
     [
-                "status" => 0,
-                "message" => "Mã giảm giá không tồn tại"
+        "status" => 0,
+        "message" => "Mã giảm giá không tồn tại"
     ]
 ##### Nếu thành công #####
 
     [
-            message: "Success!"
-            products: Array(3)
-                0: {product_id: 1, is_product_sale: true, regular_price: 125, product_sale_price: 20, product_after_sale: 105}
-                1: {product_id: 2, is_product_sale: true, regular_price: 175, product_sale_price: 20, product_after_sale: 155}
-                2: {product_id: 3, is_product_sale: false, regular_price: 175, product_sale_price: 0, product_after_sale: 0}
-            status: 1
-            total_price: 550
-            total_sale: 40
-        ]
+        message: "Success!"
+        products: Array(3)
+            0: {product_id: 1, is_product_sale: true, regular_price: 125, product_sale_price: 20, product_after_sale: 105}
+            1: {product_id: 2, is_product_sale: true, regular_price: 175, product_sale_price: 20, product_after_sale: 155}
+            2: {product_id: 3, is_product_sale: false, regular_price: 175, product_sale_price: 0, product_after_sale: 0}
+        status: 1
+        total_price: 550
+        total_sale: 40
+    ]
     
 Trong đó:
 - Status: Tình trạng, 0: fail, 1: success.
