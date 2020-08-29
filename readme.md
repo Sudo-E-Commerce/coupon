@@ -87,7 +87,7 @@ Trong đó:
 #### Update coupon sau khi sử dụng ###
 Sau khi sử dụng coupon và đặt hàng thành công, update lại số lượng coupon bằng cách gọi method updateQuantity() in model Coupon
 
-    $coupon = \Sudo\Coupon\Models\Coupon::where('code', 'tmt1')->first();
+    $coupon = \Sudo\Coupon\Models\Coupon::where('code', 'coupon-code')->first();
     $coupon = $coupon->updateQuantity();
     
 Nó sẽ trả về mảng nếu thành công.
