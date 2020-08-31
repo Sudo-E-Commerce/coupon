@@ -183,9 +183,9 @@ class CouponController extends AdminController
         $form->lang($this->table_name);
         $form->text('name', $data_edit->name, 1, __('Coupon::field.name'));
         $form->text('code', $data_edit->code, 1, __('Coupon::field.code'));
-        $form->text('max_value', $data_edit->max_value, 0, __('Coupon::field.max_value'));
-        $form->text('value', $data_edit->value, 0, __('Coupon::field.value'));
         $form->select('type', $data_edit->type, 0, __('Coupon::field.type'), config('SudoCoupon.coupon_type'));
+        $form->text('value', $data_edit->value, 0, __('Coupon::field.value'));
+        $form->text('max_value', $data_edit->max_value, 0, __('Coupon::field.max_value'));
         $form->select('select', $data_edit->select, 0, __('Coupon::field.select'), config('SudoCoupon.coupon_select_type'));
         $form->custom('Coupon::selectType', $custom_data);
         $form->text('limit', $data_edit->limit, 1, __('Coupon::field.limit'));
@@ -446,7 +446,7 @@ class CouponController extends AdminController
             }
 
         } catch (Exception $e) {
-            return response(['status' => 0, 'message' => $e->getMessage()], 500);
+            return response(['status' => 0, 'message' => getMessage()], 500);
         }
 
     }
