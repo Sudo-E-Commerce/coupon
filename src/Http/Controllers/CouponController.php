@@ -96,17 +96,17 @@ class CouponController extends AdminController
             $data = [];
             switch ($type_id) {
                 case 2:
-                    $data = \Sudo\Product\Models\Product::where('status', 1)->get();
-                    break;
+                $data = \Sudo\Product\Models\Product::where('status', 1)->get();
+                break;
                 case 1:
-                    $data = \Sudo\Product\Models\ProductCategory::where('status', 1)->get();
-                    break;
+                $data = \Sudo\Product\Models\ProductCategory::where('status', 1)->get();
+                break;
                 default:
-                    break;
+                break;
             }
             return response()->json(json_encode($data));
         } catch (\Exception $e) {
-            return response()->json($e->getMessage());
+            return response(['status' => 0, 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -144,7 +144,6 @@ class CouponController extends AdminController
                 ]);
 
             }
-//            \Sudo\Product\Models\Product::find($id)->detach($type_id);
         }
 
         // Điều hướng
@@ -212,7 +211,6 @@ class CouponController extends AdminController
      */
     public function update(Request $requests, $id)
     {
-
         // Xử lý validate
         validateForm($requests, 'name', 'Name is required!');
         validateForm($requests, 'code', 'Code is required!');
@@ -348,34 +346,34 @@ class CouponController extends AdminController
                     $product_regular_price = $product->price;
                     switch ($current_coupon->select) {
                         case 2: // check if coupon for product
-                            $check = $this->models->where(['code' => $coupon, 'select' => 2])
-                                ->whereHas('couponSelect', function ($q) use ($product) {
-                                    $q->where('type_id', $product->id);
-                                })->get();
+                        $check = $this->models->where(['code' => $coupon, 'select' => 2])
+                        ->whereHas('couponSelect', function ($q) use ($product) {
+                            $q->where('type_id', $product->id);
+                        })->get();
 
-                            if (count($check) > 0) {
-                                $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
-                                $sale_price = (int)$product_regular_price - (int)$after_sale_price;
-                            }
-                            break;
-                        case 1: // check if coupon for categories
-                            $check = $this->models->where(['code' => $coupon, 'select' => 1])
-                                ->whereHas('couponSelect', function ($q) use ($product) {
-                                    $q->where('type_id', $product->category_id);
-                                })->get();
-
-                            if (count($check) > 0) {
-                                $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
-                                $sale_price = (int)$product_regular_price - (int)$after_sale_price;
-                            }
-                            break;
-                        case 0: // for all
+                        if (count($check) > 0) {
                             $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
                             $sale_price = (int)$product_regular_price - (int)$after_sale_price;
-                            break;
+                        }
+                        break;
+                        case 1: // check if coupon for categories
+                        $check = $this->models->where(['code' => $coupon, 'select' => 1])
+                        ->whereHas('couponSelect', function ($q) use ($product) {
+                            $q->where('type_id', $product->category_id);
+                        })->get();
+
+                        if (count($check) > 0) {
+                            $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
+                            $sale_price = (int)$product_regular_price - (int)$after_sale_price;
+                        }
+                        break;
+                        case 0: // for all
+                        $after_sale_price = $this->calculator($current_coupon, $product_regular_price);
+                        $sale_price = (int)$product_regular_price - (int)$after_sale_price;
+                        break;
                         default:
 
-                            break;
+                        break;
                     }
 
                     $data[] = [
@@ -396,7 +394,7 @@ class CouponController extends AdminController
             return response(['status' => 1, 'products' => $data, 'total_sale' => $total_sale, 'total_price' => $total_price, 'message' => 'Success!']);
 
         } catch (Exception $e) {
-            return response($e->getMessage(), 500);
+            return response(['status' => 0, 'message' => $e->getMessage()], 500);
         }
     }
 
@@ -419,5 +417,37 @@ class CouponController extends AdminController
         }
 
         return (int)$price - (int)$sale;
+    }
+
+    public function getCouponsOfProduct($product_id)
+    {
+        try{
+            $product = \Sudo\Product\Models\Product::where(['status' => 1, 'id' => $product_id])->first();
+
+            if(!empty($product)){
+                $category_id = $product->category_id;
+
+                $coupon_product = \Sudo\Coupon\Models\Coupon::select('coupons.*')
+                    ->leftjoin('coupon_selects', 'coupon_selects.coupon_id', 'coupons.id')
+                    ->where(['coupons.select' => 2, 'coupon_selects.type_id' => $product_id])
+                    ->orWhere(function($q) use($category_id){
+                        $q->where('coupons.select', 1);  // get all coupon for "product has category_id = $category_id"
+                        $q->where('coupon_selects.type_id', $category_id);
+                    })
+                    ->orWhere(function($q){
+                        $q->where('coupons.select', 0); // get all coupon for "all"
+                    })
+                    ->get()
+                    ->toArray();
+
+                return response(['status' => 1, 'data' => $coupon_product]);
+            } else {
+                return response([ 'status' => 0, 'message' => __('Coupon::message.empty_data')]);
+            }
+
+        } catch (Exception $e) {
+            return response(['status' => 0, 'message' => $e->getMessage()], 500);
+        }
+
     }
 }
