@@ -84,6 +84,37 @@ Trong đó:
 - Total_price: Tổng số tiền của sản phẩm khi chưa sử dụng coupon.
 - Total_sale: Tổng số tiền được giảm khi sử dụng coupon. 
     
+##### Call API coupons/get-coupons/{product_id} để lấy toàn bộ coupons của sản phẩm. #####
+-   Example: `https://chanhtuoi.com/coupons/get-coupons/1`
+    
+#### Kết quả trả về ####
+##### Có lỗi xảy ra #####
+    {
+        "status": 0,
+        "message": "Dữ liệu trống!"
+    }
+##### Nếu thành công #####
+    {
+        "status": 1,
+        "data": [
+            {
+                "id": 3,
+                "name": "trongtm",
+                "code": "trongtm",
+                "type": 0,
+                "max_value": 100,
+                "value": 50,
+                "select": 2,
+                "limit": 5,
+                "used": 5,
+                "start_time": "2020-08-19 00:00:00",
+                "end_time": "2020-09-04 00:00:00",
+                "status": 1,
+                "created_at": "2020-08-29T01:58:48.000000Z",
+                "updated_at": "2020-08-29T02:21:13.000000Z"
+            }
+        }
+    }
 #### Update coupon sau khi sử dụng ###
 Sau khi sử dụng coupon và đặt hàng thành công, update lại số lượng coupon bằng cách gọi method updateQuantity() in model Coupon
 

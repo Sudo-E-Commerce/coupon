@@ -12,5 +12,6 @@ App::booted(function() {
 	Route::namespace($namespace)->prefix('coupons')->middleware(['web'])->group(function() {
 		// lấy giá sản phẩm sau khi sử dụng coupon (single) params: product_id, code of coupon
     	Route::get('price-after-coupon', 'CouponController@getPriceAfterCoupon')->name('coupons.getPriceAfterCoupon');
+    	Route::get('get-coupons/{product_id}', 'CouponController@getCouponsOfProduct')->name('coupons.getCouponsOfProduct');
 	});
 });
