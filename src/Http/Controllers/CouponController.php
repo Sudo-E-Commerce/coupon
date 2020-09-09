@@ -412,7 +412,7 @@ class CouponController extends AdminController
             $sale = (int)$coupon->value;
         }
 
-        if ($sale > $coupon->max_value) { // if price sale greater then max_value, return max_value
+        if ($coupon->max_value > 0 && $sale > $coupon->max_value) { // if price sale greater then max_value, return max_value
             $sale = $coupon->max_value;
         }
 
