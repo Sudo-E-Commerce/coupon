@@ -407,9 +407,9 @@ class CouponController extends AdminController
     public function calculator($coupon, $price)
     {
         if ($coupon->type) { // 0: money, 1: percent
-            $sale = (int)$coupon->value;
-        } else {
             $sale = (int)$price * ((int)$coupon->value / 100);
+        } else {
+            $sale = (int)$coupon->value;
         }
 
         if ($sale > $coupon->max_value) { // if price sale greater then max_value, return max_value
