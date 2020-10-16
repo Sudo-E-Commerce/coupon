@@ -51,6 +51,7 @@ Mặc định package sẽ tạo ra giao diện quản lý cho toàn bộ coupon
 
 ##### Call API coupons/price-after-coupon?ids=[1,2,3]&coupon=tmt để áp dụng coupon cho sản phẩm. #####
 -   Example: `https://chanhtuoi.com/coupons/price-after-coupon?ids=[1,2,3]&coupon=tmt`
+- `Trường hợp này viết API bởi vì một số trang web sẽ phải update lại giá sau khi giảm và sử lý số tiền được giảm để hiển thị nhiều chỗ khác nhau. Viết API để họ tự xử lý được phần đấy`
 
 ##### Kết quả trả về: #####
             
